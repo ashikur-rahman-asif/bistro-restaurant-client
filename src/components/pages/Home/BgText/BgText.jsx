@@ -2,7 +2,7 @@
 import './BgText.css'
 const BgText = () => {
   return (
-    <div className="chef-image sm:hidden">
+    <div className="chef-image ">
       <div className="text-center mx-auto bg-black  bg-opacity-50 py-36 text-white">
         <div className="w-2/4 mx-auto bg-white h-80 p-14">
           <h3 className="text-3xl text-black font-semibold mb-4">Bistro Boss</h3>
