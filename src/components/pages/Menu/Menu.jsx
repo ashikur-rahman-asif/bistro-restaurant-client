@@ -11,7 +11,9 @@ import soupImg from "../../../assets/menu/soup-bg.jpg";
 import SectionTitle from "../Shared/SectionTitle/SectionTitle";
 import useMenu from "../../hooks/useMenu";
 import MenuCategory from "./MenuCategory/MenuCategory";
+
 const Menu = () => {
+
   const [menu] = useMenu();
   const dessert = menu.filter((items) => items.category === "dessert");
   const soup = menu.filter((items) => items.category === "soup");
@@ -32,25 +34,25 @@ const Menu = () => {
       {/* desserts menu items */}
       <MenuCategory
         items={dessert}
-        title={"Dessert"}
+        title={"dessert"}
         coverImg={dessertImg}
       ></MenuCategory>
       {/* pizza menu items */}
       <MenuCategory
         items={pizza}
-        title={"Pizza"}
+        title={"pizza"}
         coverImg={pizzaImg}
       ></MenuCategory>
       {/* salad menu items */}
       <MenuCategory
         items={salad}
-        title={"Salad"}
+        title={"salad"}
         coverImg={saladImg}
       ></MenuCategory>
       {/* pizza menu items */}
       <MenuCategory
         items={soup}
-        title={"Soup"}
+        title={"soup"}
         coverImg={soupImg}
       ></MenuCategory>
     </div>
