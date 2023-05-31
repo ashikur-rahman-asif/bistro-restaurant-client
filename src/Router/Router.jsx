@@ -7,6 +7,7 @@ import Home from "../components/pages/Home/Home/Home";
 import Menu from "../components/pages/Menu/Menu";
 import Order from "../components/pages/Order/Order";
 import Login from "../components/pages/Login/Login";
+import SignUp from "../components/pages/SignUp/SignUp";
 const router = createBrowserRouter([
     {
       path: "/",
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
           {
             path: '/login',
             element:<Login/>
+          },
+          {
+            path: '/signup',
+            element:<SignUp/>
           }
 
     ],

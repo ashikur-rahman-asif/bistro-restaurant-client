@@ -1,33 +1,52 @@
 // import React from 'react';
-import { useEffect, useRef, useState } from "react";
-import {
-  loadCaptchaEnginge,
-  LoadCanvasTemplate,
-  validateCaptcha,
-} from "react-simple-captcha";
+import { useContext, useEffect,  useState } from "react";
+import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import { AuthContext } from "../../Privider/AuthProvider";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 const Login = () => {
-  const captchaRef = useRef(null);
+
   const [disabled, setDisabled] = useState(true);
+  const { login } = useContext(AuthContext)
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   useEffect(() => {
     loadCaptchaEnginge(4);
   }, []);
-  const handleValidateCaptcha = () => {
-    const user_captcha_value = captchaRef.current.value;
-    console.log(user_captcha_value);
-    if (validateCaptcha(user_captcha_value) == true) {
-      setDisabled(false);
-      alert("Captcha Matched");
-    } else {
-      alert("Captcha Does Not Match");
+
+  const handleValidateCaptcha = (e) => {
+    const user_captcha_value = e.target.value;
+    if (validateCaptcha(user_captcha_value)) {
+        setDisabled(false);
     }
-  };
+    else {
+        setDisabled(true)
+    }
+}
+
   const handleLogin = (e) => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
     console.log(email, password);
+    login(email,password)
+      .then(result => {
+        const user = result.user
+        console.log(user)
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'User created successfully.',
+          showConfirmButton: false,
+          timer: 1500
+        });
+        navigate(from, { replace: true });
+    })
   };
+  
   return (
     <div>
       <div className="hero min-h-screen bg-base-200">
@@ -73,19 +92,8 @@ const Login = () => {
                 <label className="label">
                   <LoadCanvasTemplate />
                 </label>
-                <input
-                  ref={captchaRef}
-                  type="text"
-                  name="captcha"
-                  placeholder="type the captcha"
-                  className="input input-bordered"
-                />
-                <button
-                  onClick={handleValidateCaptcha}
-                  className="btn btn-outline btn-xs mt-2"
-                >
-                  Validate
-                </button>
+                <input onBlur={handleValidateCaptcha} type="text" name="captcha" placeholder="type the captcha above" className="input input-bordered" />
+                
               </div>
               <div className="form-control mt-6">
                 <input
@@ -96,6 +104,7 @@ const Login = () => {
                 />
               </div>
             </form>
+            <p><small>New Here? Create an account <Link to="/signup">Create an Account</Link> </small></p>
           </div>
         </div>
       </div>
