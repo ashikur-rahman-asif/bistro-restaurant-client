@@ -14,6 +14,6 @@ const useMenu = () => {
                 // console.log(data)
             })
     }, [])
-    return [menu]
+    return [menu,loading]
 }
 export default useMenu

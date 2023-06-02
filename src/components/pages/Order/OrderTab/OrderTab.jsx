@@ -1,10 +1,12 @@
 // import React from 'react';
 
 import FoodCard from "../../FoodCard/FoodCard";
-import { Swiper, SwiperSlide } from 'swiper/react';
+// import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
 import 'swiper/css';
+
+//TODO: implement pagination here
 const OrderTab = ({items}) => {
     return (
         <div className="grid md:grid-cols-3">

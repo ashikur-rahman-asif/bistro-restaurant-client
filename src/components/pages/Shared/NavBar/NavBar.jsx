@@ -1,18 +1,19 @@
 // import React from 'react';
-
+import { FaShoppingCart } from "react-icons/fa";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../Privider/AuthProvider";
-import Swal from 'sweetalert2/dist/sweetalert2.js'
+import useCart from "../../../hooks/useCart";
+// import Swal from "sweetalert2/dist/sweetalert2.js";
 
 const NavBar = () => {
-  const { user, logOut } = useContext(AuthContext)
-  
+  const { user, logOut } = useContext(AuthContext);
+const [cart]=useCart()
   const handleLogOut = () => {
     logOut()
-      .then(() => { })
-    .catch(err=>console.log(err))
-  }
+      .then(() => {})
+      .catch((err) => console.log(err));
+  };
   const navOptions = (
     <>
       <li>
@@ -24,22 +25,38 @@ const NavBar = () => {
       <li>
         <Link to="/order/salad">Order Food</Link>
       </li>
-      
-      {
-        user ? <>
+      <li>
+        <Link to="/">
+          <button className="btn gap-2">
+            <FaShoppingCart />
+
+            <div className="badge">+{cart?.length || 0}</div>
+          </button>
+         
+        </Link>
+      </li>
+
+      {user ? (
+        <>
           <span>{user?.displayName}</span>
           <li>
-            <Link><button onClick={handleLogOut} className="btn btn-active btn-ghost">Logout</button></Link>
-        </li>
-        </> : <>
-        <li>
-        <Link to="/login">Login</Link>
+            <Link>
+              <button
+                onClick={handleLogOut}
+                className="btn btn-active btn-ghost"
+              >
+                Logout
+              </button>
+            </Link>
           </li>
         </>
-      }
-      
-      
-     
+      ) : (
+        <>
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+        </>
+      )}
     </>
   );
   return (
