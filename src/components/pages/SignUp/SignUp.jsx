@@ -4,39 +4,51 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { AuthContext } from "../../Privider/AuthProvider";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 const SignUp = () => {
-    const {createUser,updateUserProfile}=useContext(AuthContext)
+  const { createUser, updateUserProfile } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
-    reset ,
+    reset,
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     console.log(data);
-    createUser(data.email, data.password)
-        .then(result => {
-            const loggedUser = result.user;
-            console.log(loggedUser);
-            updateUserProfile(data.name, data.photoURL)
-                .then(() => {
-                    console.log('user profile info updated')
-                    reset();
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: 'User created successfully.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                    navigate('/');
-
-                })
-                .catch(error => console.log(error))
+    createUser(data.email, data.password).then((result) => {
+      const loggedUser = result.user;
+      console.log(loggedUser);
+      updateUserProfile(data.name, data.photoURL)
+        .then(() => {
+          const savedUser={name:data.name,email:data.email}
+          console.log("user profile info updated");
+          fetch("http://localhost:5000/users", {
+            method: 'POST',
+            headers: {
+              'content-type':'application/json'
+            },
+            body:JSON.stringify(savedUser)
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+              if (data.insertedId) {
+                reset();
+                Swal.fire({
+                  position: "top-end",
+                  icon: "success",
+                  title: "User created successfully.",
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+                navigate("/");
+              }
+            });
         })
-};
+        .catch((error) => console.log(error));
+    });
+  };
 
   return (
     <div className="hero min-h-screen bg-base-200">
