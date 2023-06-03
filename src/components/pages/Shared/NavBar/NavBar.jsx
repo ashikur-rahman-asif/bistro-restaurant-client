@@ -26,7 +26,7 @@ const [cart]=useCart()
         <Link to="/order/salad">Order Food</Link>
       </li>
       <li>
-        <Link to="/">
+        <Link to="/dashboard/mycart">
           <button className="btn gap-2">
             <FaShoppingCart />
 
