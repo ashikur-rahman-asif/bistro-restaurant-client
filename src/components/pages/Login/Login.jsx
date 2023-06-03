@@ -4,6 +4,7 @@ import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-s
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import { AuthContext } from "../../Privider/AuthProvider";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import SocialLogin from "../Shared/SocialLogin/SocialLogin";
 const Login = () => {
 
   const [disabled, setDisabled] = useState(true);
@@ -105,6 +106,7 @@ const Login = () => {
               </div>
             </form>
             <p><small>New Here? Create an account <Link to="/signup">Create an Account</Link> </small></p>
+            <SocialLogin/>
           </div>
         </div>
       </div>
